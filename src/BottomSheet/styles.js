@@ -1,26 +1,25 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
   },
   background: {
     flex: 1,
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
   },
   container: {
-    backgroundColor: "#F3F3F3",
-    width: "100%",
+    width: '100%',
     height: 0,
-    overflow: "hidden",
+    overflow: 'hidden',
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
   },
   draggableContainer: {
-    width: "100%",
-    alignItems: "center",
-    backgroundColor: "transparent",
+    width: '100%',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
   },
   draggableIcon: {
     width: 40,
@@ -29,6 +28,6 @@ const styles = StyleSheet.create({
     margin: 10,
     marginBottom: 0,
   },
-});
+})
 
-export default styles;
+export default styles

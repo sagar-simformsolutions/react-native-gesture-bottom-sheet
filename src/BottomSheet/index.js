@@ -1,79 +1,79 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 import {
-  View,
-  Modal,
-  TouchableOpacity,
   Animated,
+  Modal,
   PanResponder,
-} from "react-native";
-import styles from "./styles";
+  TouchableOpacity,
+  View,
+} from 'react-native'
+import styles from './styles'
 
 class BottomSheet extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       modalVisible: false,
       animatedHeight: new Animated.Value(0),
       pan: new Animated.ValueXY(),
-    };
+    }
 
-    this.createPanResponder(props);
+    this.createPanResponder(props)
   }
 
   setModalVisible(visible) {
-    const { closeFunction, height } = this.props;
-    const { animatedHeight, pan } = this.state;
+    const { closeFunction, height } = this.props
+    const { animatedHeight, pan } = this.state
     if (visible) {
-      this.setState({ modalVisible: visible });
+      this.setState({ modalVisible: visible })
       Animated.timing(animatedHeight, {
         toValue: height,
         duration: 300,
         useNativeDriver: false,
-      }).start();
+      }).start()
     } else {
       Animated.timing(animatedHeight, {
         toValue: 0,
         duration: 400,
         useNativeDriver: false,
       }).start(() => {
-        pan.setValue({ x: 0, y: 0 });
+        pan.setValue({ x: 0, y: 0 })
         this.setState({
           modalVisible: visible,
           animatedHeight: new Animated.Value(0),
-        });
-        if (typeof closeFunction === "function") closeFunction();
-      });
+        })
+        if (typeof closeFunction === 'function') closeFunction()
+      })
     }
   }
 
   createPanResponder(props) {
-    const { height } = props;
-    const { pan } = this.state;
+    const { height } = props
+    const { pan } = this.state
     this.panResponder = PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onPanResponderMove: (e, gestureState) => {
         if (gestureState.dy > 0) {
-          Animated.event([null, { dy: pan.y }])(e, gestureState);
+          Animated.event([null, { dy: pan.y }])(e, gestureState)
         }
       },
       onPanResponderRelease: (e, gestureState) => {
-        const gestureLimitArea = height / 3;
-        const gestureDistance = gestureState.dy;
+        const gestureLimitArea = height / 3
+        const gestureDistance = gestureState.dy
         if (gestureDistance > gestureLimitArea) {
-          this.setModalVisible(false);
+          this.setModalVisible(false)
         } else {
-          Animated.spring(pan, { toValue: { x: 0, y: 0 } }).start();
+          Animated.spring(pan, { toValue: { x: 0, y: 0 } }).start()
         }
       },
-    });
+    })
   }
 
   show() {
-    this.setModalVisible(true);
+    this.setModalVisible(true)
   }
 
   close() {
-    this.setModalVisible(false);
+    this.setModalVisible(false)
   }
 
   render() {
@@ -85,18 +85,19 @@ class BottomSheet extends Component {
       draggable = true,
       onRequestClose,
       radius,
-    } = this.props;
-    const { animatedHeight, pan, modalVisible } = this.state;
+      sheetBackgroundColor = '#F3F3F3',
+    } = this.props
+    const { animatedHeight, pan, modalVisible } = this.state
     const panStyle = {
       transform: pan.getTranslateTransform(),
-    };
+    }
 
     return (
       <Modal transparent visible={modalVisible} onRequestClose={onRequestClose}>
         <View
           style={[
             styles.wrapper,
-            { backgroundColor: backgroundColor || "#25252599" },
+            { backgroundColor: backgroundColor || '#25252599' },
           ]}
         >
           <TouchableOpacity
@@ -113,6 +114,7 @@ class BottomSheet extends Component {
                 height: animatedHeight,
                 borderTopRightRadius: radius || 10,
                 borderTopLeftRadius: radius || 10,
+                backgroundColor: sheetBackgroundColor,
               },
             ]}
           >
@@ -122,7 +124,7 @@ class BottomSheet extends Component {
                   style={[
                     styles.draggableIcon,
                     {
-                      backgroundColor: dragIconColor || "#A3A3A3",
+                      backgroundColor: dragIconColor || '#A3A3A3',
                     },
                   ]}
                 />
@@ -132,8 +134,8 @@ class BottomSheet extends Component {
           </Animated.View>
         </View>
       </Modal>
-    );
+    )
   }
 }
 
-export default BottomSheet;
+export default BottomSheet
