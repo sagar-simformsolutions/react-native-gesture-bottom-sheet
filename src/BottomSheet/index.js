@@ -43,6 +43,7 @@ class BottomSheet extends Component {
         })
         if (typeof closeFunction === 'function') closeFunction()
       })
+      this.props.onModalClose()
     }
   }
 
