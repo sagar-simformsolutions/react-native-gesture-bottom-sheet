@@ -4,7 +4,7 @@ import {
   Modal,
   PanResponder,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native'
 import styles from './styles'
 
@@ -85,6 +85,7 @@ class BottomSheet extends Component {
       draggable = true,
       onRequestClose,
       radius,
+      sheetStyle,
       sheetBackgroundColor = '#F3F3F3',
     } = this.props
     const { animatedHeight, pan, modalVisible } = this.state
@@ -110,6 +111,7 @@ class BottomSheet extends Component {
             style={[
               panStyle,
               styles.container,
+              sheetStyle,
               {
                 height: animatedHeight,
                 borderTopRightRadius: radius || 10,
